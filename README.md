@@ -1,4 +1,4 @@
-# SpamLens — Intelligent Spam Detection Analytics
+ SpamScope — Intelligent Spam Detection Analytics
 
 > A full-stack text analytics system for classifying SMS messages as spam or legitimate using Naive Bayes machine learning, with a live interactive dashboard for exploration and real-time inference.
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-SpamLens is built on the **UCI SMS Spam Collection dataset** — 5,572 real-world SMS messages labelled as spam or ham (legitimate). The system trains a **Multinomial Naive Bayes classifier** with **TF-IDF feature extraction** entirely at startup, then exposes the results through a Flask REST API consumed by a browser-based analytics dashboard.
+SpamScope is built on the **UCI SMS Spam Collection dataset** — 5,572 real-world SMS messages labelled as spam or ham (legitimate). The system trains a **Multinomial Naive Bayes classifier** with **TF-IDF feature extraction** entirely at startup, then exposes the results through a Flask REST API consumed by a browser-based analytics dashboard.
 
 The project is designed to answer three questions a stakeholder would actually care about:
 
@@ -56,7 +56,6 @@ Evaluated on a held-out test set of 1,115 messages (20% of the corpus, stratifie
 | Data      | pandas, NumPy                                   |
 | Frontend  | Vanilla HTML / CSS / JavaScript                 |
 | Charts    | Chart.js 4                                      |
-| Fonts     | IBM Plex Mono, Syne (Google Fonts)              |
 | Dataset   | UCI SMS Spam Collection (`spam.csv`)            |
 
 ---
@@ -71,69 +70,6 @@ spam-detection/
 └── README.md
 ```
 
----
-
-## Getting Started
-
-### Prerequisites
-
-Python 3.8 or higher with pip available.
-
-### Installation
-
-```bash
-pip install flask flask-cors scikit-learn pandas numpy
-```
-
-> On Windows, if `pip` is not recognised, use `py -m pip install ...` or `python -m pip install ...`.
-
-### Running the Application
-
-1. Place `app.py`, `dashboard.html`, and `spam.csv` in the same folder.
-
-2. Start the Flask backend:
-
-```bash
-python app.py
-```
-
-The server starts on `http://localhost:5050`. The model trains automatically on startup — this takes a few seconds.
-
-3. Open `dashboard.html` in your browser (double-click the file, or navigate to `http://localhost:5050` if serving via Flask).
-
-> Keep the terminal window open while using the dashboard. Closing it stops the backend.
-
-### API Endpoints
-
-| Method | Endpoint       | Description                                         |
-|--------|----------------|-----------------------------------------------------|
-| GET    | `/api/stats`   | Dataset statistics, word frequencies, chart data    |
-| GET    | `/api/model`   | Accuracy, precision, recall, F1, confusion matrix   |
-| POST   | `/api/predict` | Classify a message — returns label, probabilities, and top contributing features |
-
-**Example prediction request:**
-
-```bash
-curl -X POST http://localhost:5050/api/predict \
-     -H "Content-Type: application/json" \
-     -d '{"message": "Congratulations! You have won a FREE prize. Call now!"}'
-```
-
-**Response:**
-
-```json
-{
-  "label": "spam",
-  "confidence": 99.97,
-  "spam_prob": 99.97,
-  "ham_prob": 0.03,
-  "word_count": 10,
-  "char_count": 60,
-  "top_features": [["free", 0.412], ["prize", 0.389], ...]
-}
-```
-
----
 
 ## Dataset
 
